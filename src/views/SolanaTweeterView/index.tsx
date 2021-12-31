@@ -3,13 +3,13 @@ import { FC, useEffect, useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { HomeIcon, UserIcon } from "@heroicons/react/outline";
+import {stakeTokens} from "./tweets"
 
 import { Loader, SelectAndConnectWalletButton } from "components";
 // import * as anchor from "@project-serum/anchor";
 
 import { SolanaLogo } from "components";
 import styles from "./index.module.css";
-import { getTweets, authorFilter, sendTweet } from "./tweets";
 import { useProgram } from "./useProgram";
 
 export const SolanaTweeterView: FC = ({}) => {
@@ -86,7 +86,6 @@ export const SolanaTweeterView: FC = ({}) => {
             </div>
           </div>
         </div>
-
         <div className="flex mb-16">
           <div className="mr-4">Need some SOL on test wallet?</div>
           <div className="mr-4">
@@ -119,40 +118,6 @@ const TwitterScreen = () => {
   const [profileTweets, setProfileTweets] = useState<unknown[]>([]);
   const { connection } = useConnection();
   const { program } = useProgram({ connection, wallet });
-
-  useEffect(() => {
-    fetchTweets();
-    fetchProfileTweets();
-  }, [wallet]);
-
-  const fetchTweets = async () => {
-    if (wallet && program) {
-      try {
-        const tweets = await getTweets({
-          program,
-          // topicFilter('solana'),
-        });
-        setTweets(tweets);
-      } catch (error) {
-        // set error
-      }
-    }
-  };
-
-  const fetchProfileTweets = async () => {
-    if (wallet && program) {
-      try {
-        const tweets = await getTweets({
-          program,
-          // topicFilter('solana'),
-          filter: [authorFilter(wallet?.publicKey.toBase58())],
-        });
-        setProfileTweets(tweets);
-      } catch (error) {
-        // set error
-      }
-    }
-  };
 
   return (
     <div className="rounded-lg shadow flex">
@@ -209,14 +174,8 @@ const NetTweet = () => {
     if (!content || !program) return;
 
     const topic = "default";
-    const tweet = await sendTweet({
-      wallet,
-      program,
-      topic,
-      content,
-    });
+    const tweet = await stakeTokens({wallet, program});
 
-    console.log("added new tweet: ", tweet);
     setContent("");
   };
 

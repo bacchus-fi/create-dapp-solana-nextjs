@@ -11,6 +11,7 @@
   "dependencies": {
     "@heroicons/react": "^1.0.5",
     "@nfteyez/sol-rayz-react": "^0.8.2",
+    "@orca-so/sdk": "^1.2.13",
     "@project-serum/anchor": "^0.19.1-beta.1",
     "@solana/spl-token": "^0.1.8",
     "@solana/wallet-adapter-base": "^0.7.0",

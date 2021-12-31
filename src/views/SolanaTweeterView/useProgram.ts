@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Connection, PublicKey } from "@solana/web3.js";
 import * as anchor from "@project-serum/anchor";
 
-import idl from "./solana-tweeter-idl.json";
+import idl from "./bacchus_fi.json";
 
-const SOLANA_TWITTER_PROGRAM = "926GETHcFsLU3vDWQUEnTpWYRYXktK6gCCfzivjFq4pa";
+const SOLANA_TWITTER_PROGRAM = "vLTTWyjvxqvYnqwCSfrhAVrJTs1vkrsxjGEfXigE1Sp";
 const programID = new PublicKey(SOLANA_TWITTER_PROGRAM);
 
 export interface Wallet {
