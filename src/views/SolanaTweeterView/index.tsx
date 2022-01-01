@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { HomeIcon, UserIcon } from "@heroicons/react/outline";
-import {stakeTokens} from "./tweets"
+import {stakeTokens, getBal, unstakeTokens, makeATAs} from "./tweets"
 
 import { Loader, SelectAndConnectWalletButton } from "components";
 // import * as anchor from "@project-serum/anchor";
@@ -170,8 +170,8 @@ const NetTweet = () => {
     }
   };
 
-  const onTweetSendClick = async () => {
-    if (!content || !program) return;
+  const onStakeSendClick = async () => {
+    if (!program) return;
 
     const topic = "default";
     const tweet = await stakeTokens({wallet, program});
@@ -179,30 +179,59 @@ const NetTweet = () => {
     setContent("");
   };
 
+  const onUnStakeSendClick = async () => {
+    if (!program) return;
+
+    const topic = "default";
+    const tweet = await unstakeTokens({wallet, program});
+
+    setContent("");
+  };
+
+  const createATAs = async () => {
+    if (!program) return;
+
+    const tweet = await makeATAs({wallet, program});
+    setContent("");
+  };
+
+  const getBalances = async () => {
+    if (!program) return;
+    await getBal({program, wallet});
+  };
   return (
     <div className="mb-8 pb-4 border-b border-gray-500 flex ">
-      <div className="avatar placeholder mr-4">
-        <div className="mb-4 rounded-full bg-neutral-focus text-neutral-content w-14 h-14">
-          Me
-        </div>
-      </div>
-      <div className="form-control flex-1 mx-2">
-        <textarea
-          className="textarea h-24 w-full text-2xl"
-          placeholder="What's happening?"
-          value={content}
-          onChange={onContentChange}
-        ></textarea>
-      </div>
+      <button
+        className="btn btn-primary rounded-full normal-case	px-16"
+        onClick={getBalances}
+      >
+        balances to console
+      </button>
+
+      <button
+        className="btn btn-primary rounded-full normal-case	px-16"
+        onClick={createATAs}
+      >
+        create ATAs
+      </button>
+
+      <button
+        className="btn btn-primary rounded-full normal-case	px-16"
+        onClick={onStakeSendClick}
+      >
+        Stake
+      </button>
+
       <div className="ml-auto">
         <button
           className="btn btn-primary rounded-full normal-case	px-16"
-          onClick={onTweetSendClick}
+          onClick={onUnStakeSendClick}
         >
-          Tweet
+          Unstake
         </button>
       </div>
     </div>
+
   );
 };
 

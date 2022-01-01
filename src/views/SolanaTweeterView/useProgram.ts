@@ -4,6 +4,7 @@ import * as anchor from "@project-serum/anchor";
 
 import idl from "./bacchus_fi.json";
 
+// this is the bacchus vault
 const SOLANA_TWITTER_PROGRAM = "vLTTWyjvxqvYnqwCSfrhAVrJTs1vkrsxjGEfXigE1Sp";
 const programID = new PublicKey(SOLANA_TWITTER_PROGRAM);
 
